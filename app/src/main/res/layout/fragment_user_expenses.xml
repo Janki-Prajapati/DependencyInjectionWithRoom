@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userExpenses"
+            type="com.jp.test.dependencyinjectionapp.models.UserExpenses" />
+
+        <variable
+            name="fragment"
+            type="com.jp.test.dependencyinjectionapp.fragments.UserExpensesFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAmount"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:hint="@string/amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/Rounded">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:imeOptions="actionNext"
+                android:text="@{safeUnbox(userExpenses != null) ? userExpenses.amountSpend.toString() : ``}"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/etDate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_12sdp"
+            android:background="@drawable/bg_textview"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:enabled="@{safeUnbox(userExpenses != null) ? false : true}"
+            android:onClick="@{() -> fragment.openDatePicker()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutAmount"
+            tools:ignore="Deprecated" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:hint="@string/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etDate"
+            app:shapeAppearance="@style/Rounded">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:imeOptions="actionDone"
+                android:text="@{safeUnbox(userExpenses != null) ? userExpenses.description : ``}"
+                android:inputType="text"
+                android:maxLines="3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button"
+            android:onClick="@{() -> fragment.onAddDataClick()}"
+            android:textAllCaps="false"
+            android:textColor="@color/color_FFFFFFFF"
+            android:textSize="@dimen/_12sdp"
+            android:text="@{safeUnbox(userExpenses != null) ? @string/update : @string/add}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
